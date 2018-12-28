@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Import</title>
+    <link media="all" href="/style.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="initial-scale=0.8">
+</head>
+
+<body>
+    <header>
+    </header>
+    <div>
+        <div>
+            <h1>
+                <a href="https://tt2-optimizer.herokuapp.com/">tt2-optimizer</a> export data</h1>
+            <span>Paste tt2-optimizer export data into this box.</span>
+            <textarea id="import"></textarea>
+        </div>
+        <div>
+            <h1>TT2Master export data</h1>
+            <span>Paste TT2Master data into this box.</span>
+            <textarea id="tt2master"></textarea>
+        </div>
+        <div>
+            <h1>Updated Export</h1>
+            <span>Copy this data into the import box on tt2-optimizer</span>
+            <textarea id="export"></textarea>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+    <script>
+        loadOptimizer();
+    </script>
+</body>
+
+</html>
