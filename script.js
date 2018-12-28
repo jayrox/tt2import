@@ -268,6 +268,7 @@ document.addEventListener('DOMContentLoaded', event => {
 
     if (typeof tt2master !== 'undefined' && tt2master !== null && tt2master.length > 0) {
         taTT2Master.value = decodeURI(tt2master).replace(/e /gi, 'E+');
+        updateTT2Master();
     }
 });
 
