@@ -90,6 +90,7 @@ const artLookup = {
     "Artifact57": 'as2',
     "Artifact60": 'wod'
 };
+
 const skillLookup = {
     "TapDmg": 'kv',
     "TapDmgFromHelpers": 'cho',
@@ -183,7 +184,8 @@ const updateTT2Master = () => {
     let i19 = i1[artIndex].split('|');
 
     // Loop through TT2Master artifact export values
-    Object.entries(jsond['_artLvls'])
+    const artLevels = (typeof jsond['_artLvls'] !== 'undefined') ? jsond['_artLvls'] : jsond['_arts'];
+    Object.entries(artLevels)
         .forEach(element => {
             const id = artLookup[element[1].ID];
             const level = parseFloat(element[1].Level);
@@ -213,7 +215,8 @@ const updateTT2Master = () => {
     let i110 = i1[skillIndex].split('|');
 
     // Loop through TT2Master skill export values
-    Object.entries(jsond['_skillLvls'])
+    const skillLevels = (typeof jsond['_skillLvls'] !== 'undefined') ? jsond['_skillLvls'] : jsond['_skills'];
+    Object.entries(skillLevels)
         .forEach(element => {
             const id = skillLookup[element[1].TalentID];
             const level = parseFloat(element[1].CurrentLevel);
@@ -257,3 +260,14 @@ ta_tt2optmizerOutput.addEventListener('focus', event => {
 function loadOptimizer() {
     taTT2Optimizer.value = window.localStorage.getItem('tt2optimizer');
 }
+
+document.addEventListener('DOMContentLoaded', event => {
+    loadOptimizer();
+    const urlParams = new URLSearchParams(window.location.search);
+    const tt2master = urlParams.get('tt2master');
+
+    // Supports direct export from TT2Master via a special URL param
+    if (typeof tt2master !== 'undefined' && tt2master !== null && tt2master.length > 0) {
+        taTT2Master.value = decodeURI(tt2master).replace(/e /gi, 'E+');
+    }
+});
