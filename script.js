@@ -243,8 +243,8 @@ const updateTT2Master = () => {
     // Smash them all back together and update the new import data
     ta_tt2optmizerOutput.value = i1.join('=');
 
-    ta_tt2optmizerOutput.scrollTo(0, 0);
-    ta_tt2optmizerOutput.setSelectionRange(0, ta_tt2optmizerOutput.value.length);
+    //ta_tt2optmizerOutput.scrollTo(0, 0);
+    //ta_tt2optmizerOutput.setSelectionRange(0, ta_tt2optmizerOutput.value.length);
 }
 
 // Watch the textarea boxes for changes, react automagically
@@ -266,8 +266,50 @@ document.addEventListener('DOMContentLoaded', event => {
     const urlParams = new URLSearchParams(window.location.search);
     const tt2master = urlParams.get('tt2master');
 
-    // Supports direct export from TT2Master via a special URL param
     if (typeof tt2master !== 'undefined' && tt2master !== null && tt2master.length > 0) {
         taTT2Master.value = decodeURI(tt2master).replace(/e /gi, 'E+');
     }
 });
+
+document.addEventListener('click', event => {
+    if (event.target.id === 'copy') {
+        copyExport(event.target);
+    }
+});
+
+// Copy the URL when the "Copy URL" button is clicked
+function copyExport(e) {
+    const exportStr = ta_tt2optmizerOutput.value;
+    console.log(exportStr);
+
+    let textArea = document.createElement('textarea');
+
+    // Place in top-left corner of screen regardless of scroll position
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = 0;
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+
+    // Avoid flash of white box if rendered for any reason
+    textArea.style.background = 'transparent';
+    textArea.value = exportStr;
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        let successful = document.execCommand('copy');
+        let msg = successful ? 'successful' : 'unsuccessful';
+        console.log(`Copying text command was ${msg}`);
+    } catch (err) {
+        console.error(err);
+    }
+
+    document.body.removeChild(textArea);
+}
